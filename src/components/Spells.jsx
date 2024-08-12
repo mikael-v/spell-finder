@@ -18,23 +18,24 @@ function Spells() {
     return <p>Loading...</p>;
   }
 
-  return spells.map((spell) => {
-    return (
-      <li key={spell.index}>
-        <Card style={{ width: "18rem" }}>
-          <Card.Body id="card-body">
-            <Card.Title>
-              <h2>{spell.name}</h2>
-              <h3>
-                Level {spell.level} {spell.school.name}
-              </h3>
+  return (
+    <ul className="spells-list">
+      {spells.map((spell) => (
+        <li key={spell.index} className="spell-item">
+          <Card style={{ width: "18rem" }}>
+            <Card.Body>
+              <Card.Title>
+                <h2>{spell.name}</h2>
+                <h3>
+                  Level {spell.level} {spell.school.name}
+                </h3>
+              </Card.Title>
               <p>
                 <b>Casting Time: </b> {spell.casting_time}
               </p>
               <p>
                 <b>Range: </b> {spell.range}
               </p>
-
               <p>
                 <b>Components: </b> {spell.components.join(", ")}
               </p>
@@ -42,15 +43,17 @@ function Spells() {
                 <b>Duration: </b> {spell.duration}
               </p>
               <p>{spell.desc}</p>
-              <p>
-                <b>Higher Levels: </b> {spell.higher_level}
-              </p>
-            </Card.Title>
-          </Card.Body>
-        </Card>
-      </li>
-    );
-  });
+              {spell.higher_level && (
+                <p>
+                  <b>Higher Levels: </b> {spell.higher_level}
+                </p>
+              )}
+            </Card.Body>
+          </Card>
+        </li>
+      ))}
+    </ul>
+  );
 }
 
 export default Spells;
