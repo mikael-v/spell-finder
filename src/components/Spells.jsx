@@ -22,14 +22,16 @@ function Spells() {
     <ul className="spells-list">
       {spells.map((spell) => (
         <li key={spell.index} className="spell-item">
-          <Card style={{ width: "18rem" }}>
+          <Card>
             <Card.Body>
               <Card.Title>
                 <h2>{spell.name}</h2>
-                <h3>
-                  Level {spell.level} {spell.school.name}
-                </h3>
+                <p>
+                  {spell.level === 0 ? "Cantrip" : `Level ${spell.level}`}{" "}
+                  {spell.school.name}
+                </p>
               </Card.Title>
+
               <p>
                 <b>Casting Time: </b> {spell.casting_time}
               </p>
@@ -43,9 +45,9 @@ function Spells() {
                 <b>Duration: </b> {spell.duration}
               </p>
               <p>{spell.desc}</p>
-              {spell.higher_level && (
+              {spell.higher_level && spell.higher_level.length > 0 && (
                 <p>
-                  <b>Higher Levels: </b> {spell.higher_level}
+                  <b>Higher Levels: </b> {spell.higher_level.join(" ")}
                 </p>
               )}
             </Card.Body>
