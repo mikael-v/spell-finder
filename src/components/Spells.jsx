@@ -1,4 +1,8 @@
-import { getSpellDetails, getSpellsOrderedByLevel } from "../api";
+import {
+  getSpellDetails,
+  getSpellsOrderedByLevel,
+  getSpellsOrderedBySchool,
+} from "../api";
 import { useEffect, useState } from "react";
 import Card from "react-bootstrap/Card";
 import ReactMarkdown from "react-markdown";
@@ -6,12 +10,16 @@ import ReactMarkdown from "react-markdown";
 function Spells() {
   const [spells, setSpells] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
-  const [spellOrder, setSpellOrder] = useState(0);
-
+  const [spellOrder, setSpellOrder] = useState("");
   useEffect(() => {
     setIsLoading(true);
     if (spellOrder === "Level") {
       getSpellsOrderedByLevel().then((result) => {
+        setIsLoading(false);
+        setSpells(result);
+      });
+    } else if (spellOrder === "School") {
+      getSpellsOrderedBySchool().then((result) => {
         setIsLoading(false);
         setSpells(result);
       });
@@ -33,10 +41,14 @@ function Spells() {
 
   return (
     <>
-      <select onChange={handleSpellChange}>
-        <option value="">Select Order</option>
-        <option value="Level">Level</option>
-      </select>
+      <label htmlFor="orderBy">
+        Order By:{" "}
+        <select id="orderBy" onChange={handleSpellChange} value={spellOrder}>
+          <option value="">Default (Alphabetical)</option>
+          <option value="Level">Level</option>
+          <option value="School">Spell School</option>
+        </select>
+      </label>
       <ul className="spells-list">
         {spells.map((spell) => (
           <li key={spell.index} className="spell-item">

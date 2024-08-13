@@ -35,7 +35,31 @@ export const getSpellsOrderedByLevel = async () => {
     });
 
     const allSpellDetails = await Promise.all(spellDetailsPromises);
+
     allSpellDetails.sort((a, b) => a.level - b.level);
+
+    return allSpellDetails;
+  } catch (error) {
+    console.error("Error fetching and ordering spell details:", error);
+  }
+};
+
+// Fetch all spell details and sort by school
+export const getSpellsOrderedBySchool = async () => {
+  try {
+    const spells = await getAllSpells();
+
+    const spellDetailsPromises = spells.map((spell) => {
+      return api.get(spell.url).then((response) => response.data);
+    });
+
+    const allSpellDetails = await Promise.all(spellDetailsPromises);
+
+    allSpellDetails.sort((a, b) => {
+      if (a.school.name < b.school.name) return -1;
+      if (a.school.name > b.school.name) return 1;
+      return 0;
+    });
 
     return allSpellDetails;
   } catch (error) {
