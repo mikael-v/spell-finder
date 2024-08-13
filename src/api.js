@@ -8,16 +8,23 @@ export const getAllSpells = () => {
   });
 };
 
-// Fetch all spell details
-export const getSpellDetails = async () => {
+// Fetch all spell details with optional sorting
+export const getSpellDetails = async (orderBy = null) => {
   try {
     const spells = await getAllSpells();
-
     const spellDetailsPromises = spells.map((spell) => {
       return api.get(spell.url).then((response) => response.data);
     });
 
     const allSpellDetails = await Promise.all(spellDetailsPromises);
+
+    if (orderBy === "Level") {
+      allSpellDetails.sort((a, b) => a.level - b.level);
+    } else if (orderBy === "School") {
+      allSpellDetails.sort((a, b) =>
+        a.school.name.localeCompare(b.school.name)
+      );
+    }
 
     return allSpellDetails;
   } catch (error) {
@@ -25,44 +32,32 @@ export const getSpellDetails = async () => {
   }
 };
 
-// Fetch all spell details and sort by level
-export const getSpellsOrderedByLevel = async () => {
+// Fetch and filter spells by level with optional sorting
+export const getFilteredSpells = async (level = null, orderBy = null) => {
   try {
     const spells = await getAllSpells();
-
     const spellDetailsPromises = spells.map((spell) => {
       return api.get(spell.url).then((response) => response.data);
     });
 
     const allSpellDetails = await Promise.all(spellDetailsPromises);
 
-    allSpellDetails.sort((a, b) => a.level - b.level);
+    let filteredSpells = allSpellDetails;
 
-    return allSpellDetails;
+    if (level) {
+      filteredSpells = filteredSpells.filter(
+        (spell) => spell.level === parseInt(level, 10)
+      );
+    }
+
+    if (orderBy === "Level") {
+      filteredSpells.sort((a, b) => a.level - b.level);
+    } else if (orderBy === "School") {
+      filteredSpells.sort((a, b) => a.school.name.localeCompare(b.school.name));
+    }
+
+    return filteredSpells;
   } catch (error) {
-    console.error("Error fetching and ordering spell details:", error);
-  }
-};
-
-// Fetch all spell details and sort by school
-export const getSpellsOrderedBySchool = async () => {
-  try {
-    const spells = await getAllSpells();
-
-    const spellDetailsPromises = spells.map((spell) => {
-      return api.get(spell.url).then((response) => response.data);
-    });
-
-    const allSpellDetails = await Promise.all(spellDetailsPromises);
-
-    allSpellDetails.sort((a, b) => {
-      if (a.school.name < b.school.name) return -1;
-      if (a.school.name > b.school.name) return 1;
-      return 0;
-    });
-
-    return allSpellDetails;
-  } catch (error) {
-    console.error("Error fetching and ordering spell details:", error);
+    console.error("Error fetching and filtering spell details:", error);
   }
 };
