@@ -8,7 +8,6 @@ export const getAllSpells = () => {
   });
 };
 
-// Fetch all spell details with optional sorting
 export const getSpellDetails = async (orderBy = null) => {
   try {
     const spells = await getAllSpells();
@@ -32,13 +31,17 @@ export const getSpellDetails = async (orderBy = null) => {
   }
 };
 
-// Fetch and filter spells by level with optional sorting
-export const getFilteredSpells = async (level = null, orderBy = null) => {
+export const getFilteredSpells = async (
+  level = null,
+  school = null,
+  className = null,
+  orderBy = null
+) => {
   try {
     const spells = await getAllSpells();
-    const spellDetailsPromises = spells.map((spell) => {
-      return api.get(spell.url).then((response) => response.data);
-    });
+    const spellDetailsPromises = spells.map((spell) =>
+      api.get(spell.url).then((response) => response.data)
+    );
 
     const allSpellDetails = await Promise.all(spellDetailsPromises);
 
@@ -47,6 +50,18 @@ export const getFilteredSpells = async (level = null, orderBy = null) => {
     if (level) {
       filteredSpells = filteredSpells.filter(
         (spell) => spell.level === parseInt(level, 10)
+      );
+    }
+
+    if (school) {
+      filteredSpells = filteredSpells.filter(
+        (spell) => spell.school.name === school
+      );
+    }
+
+    if (className) {
+      filteredSpells = filteredSpells.filter((spell) =>
+        spell.classes.some((cls) => cls.name === className)
       );
     }
 
