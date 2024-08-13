@@ -10,6 +10,7 @@ function Spells() {
   const [selectedLevel, setSelectedLevel] = useState("");
   const [selectedSchool, setSelectedSchool] = useState("");
   const [selectedClass, setSelectedClass] = useState("");
+  const [filtersVisible, setFiltersVisible] = useState(false);
 
   useEffect(() => {
     setIsLoading(true);
@@ -40,6 +41,10 @@ function Spells() {
     setSelectedClass(event.target.value);
   };
 
+  const toggleFilters = () => {
+    setFiltersVisible(!filtersVisible);
+  };
+
   if (isLoading) {
     return <p>Loading...</p>;
   }
@@ -55,63 +60,70 @@ function Spells() {
             <option value="School">Spell School</option>
           </select>
         </label>
-        <label htmlFor="levelFilter">
-          Filter By Level:{" "}
-          <select
-            id="levelFilter"
-            onChange={handleLevelChange}
-            value={selectedLevel}
-          >
-            <option value="">All Levels</option>
-            <option value="0">Cantrips</option>
-            <option value="1">Level 1</option>
-            <option value="2">Level 2</option>
-            <option value="3">Level 3</option>
-            <option value="4">Level 4</option>
-            <option value="5">Level 5</option>
-            <option value="6">Level 6</option>
-            <option value="7">Level 7</option>
-            <option value="8">Level 8</option>
-            <option value="9">Level 9</option>
-          </select>
-        </label>
-        <label htmlFor="schoolFilter">
-          Filter By School:{" "}
-          <select
-            id="schoolFilter"
-            onChange={handleSchoolChange}
-            value={selectedSchool}
-          >
-            <option value="">All Schools</option>
-            <option value="Abjuration">Abjuration</option>
-            <option value="Conjuration">Conjuration</option>
-            <option value="Divination">Divination</option>
-            <option value="Enchantment">Enchantment</option>
-            <option value="Evocation">Evocation</option>
-            <option value="Illusion">Illusion</option>
-            <option value="Necromancy">Necromancy</option>
-            <option value="Transmutation">Transmutation</option>
-          </select>
-        </label>
-        <label htmlFor="classFilter">
-          Filter By Class:{" "}
-          <select
-            id="classFilter"
-            onChange={handleClassChange}
-            value={selectedClass}
-          >
-            <option value="">All Classes</option>
-            <option value="Artificer">Artificer</option>
-            <option value="Bard">Bard</option>
-            <option value="Cleric">Cleric</option>
-            <option value="Druid">Druid</option>
-            <option value="Paladin">Paladin</option>
-            <option value="Ranger">Ranger</option>
-            <option value="Sorcerer">Sorcerer</option>
-            <option value="Warlock">Warlock</option>
-            <option value="Wizard">Wizard</option>
-          </select>
-        </label>
+        <button onClick={toggleFilters} style={{ margin: "10px 0" }}>
+          {filtersVisible ? "Hide Filters" : "Show Filters"}
+        </button>
+        {filtersVisible && (
+          <div id="filters">
+            <label htmlFor="levelFilter">
+              Filter By Level:{" "}
+              <select
+                id="levelFilter"
+                onChange={handleLevelChange}
+                value={selectedLevel}
+              >
+                <option value="">All Levels</option>
+                <option value="0">Cantrips</option>
+                <option value="1">Level 1</option>
+                <option value="2">Level 2</option>
+                <option value="3">Level 3</option>
+                <option value="4">Level 4</option>
+                <option value="5">Level 5</option>
+                <option value="6">Level 6</option>
+                <option value="7">Level 7</option>
+                <option value="8">Level 8</option>
+                <option value="9">Level 9</option>
+              </select>
+            </label>
+            <label htmlFor="schoolFilter">
+              Filter By School:{" "}
+              <select
+                id="schoolFilter"
+                onChange={handleSchoolChange}
+                value={selectedSchool}
+              >
+                <option value="">All Schools</option>
+                <option value="Abjuration">Abjuration</option>
+                <option value="Conjuration">Conjuration</option>
+                <option value="Divination">Divination</option>
+                <option value="Enchantment">Enchantment</option>
+                <option value="Evocation">Evocation</option>
+                <option value="Illusion">Illusion</option>
+                <option value="Necromancy">Necromancy</option>
+                <option value="Transmutation">Transmutation</option>
+              </select>
+            </label>
+            <label htmlFor="classFilter">
+              Filter By Class:{" "}
+              <select
+                id="classFilter"
+                onChange={handleClassChange}
+                value={selectedClass}
+              >
+                <option value="">All Classes</option>
+                <option value="Artificer">Artificer</option>
+                <option value="Bard">Bard</option>
+                <option value="Cleric">Cleric</option>
+                <option value="Druid">Druid</option>
+                <option value="Paladin">Paladin</option>
+                <option value="Ranger">Ranger</option>
+                <option value="Sorcerer">Sorcerer</option>
+                <option value="Warlock">Warlock</option>
+                <option value="Wizard">Wizard</option>
+              </select>
+            </label>
+          </div>
+        )}
       </div>
       <ul className="spells-list">
         {spells.map((spell) => (
