@@ -119,14 +119,19 @@ button {
   .spell-item {
     margin: 0 20px 0 20px;
     padding: 5px;
-    background-color: #f4eed8;
-    color: #000;
+    background-color: #290701;
+    color: #fdf6bd;
     width: fit-content;
     align-items: center;
     justify-content: center;
     display: flex;
     height: max-content;
-    border: #61481b 3px solid;
+    border: #952f0e 3px solid;
     border-radius: 5px;
+  }
+
+  #filters {
+    display: flex;
+    flex-direction: column;
   }
 }
