@@ -15,7 +15,7 @@ body {
   font-weight: 400;
   color-scheme: light dark;
   color: rgba(255, 255, 255, 0.87);
-  background-color: #242424;
+  background-color: #030303;
   font-synthesis: none;
   text-rendering: optimizeLegibility;
   -webkit-font-smoothing: antialiased;
@@ -42,19 +42,24 @@ body {
 .spell-item {
   margin: 0;
   padding: 0px 15px;
-  background-color: #f4eed8;
-  color: #000;
+  background-color: #290701;
+  color: #fdf6bd;
   width: 900px;
   align-items: center;
   justify-content: center;
   display: flex;
   height: 800px;
-  border: #61481b 3px solid;
+  border: #952f0e 3px solid;
   border-radius: 5px;
 }
 
 p {
   font-size: 15px;
+}
+
+select {
+  background-color: #fdf6bd;
+  color: #290701;
 }
 
 h1 {

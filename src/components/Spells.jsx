@@ -66,7 +66,7 @@ function Spells() {
         {filtersVisible && (
           <div id="filters">
             <label htmlFor="levelFilter">
-              Filter By Level:{" "}
+              Filter By Level:{"  "}
               <select
                 id="levelFilter"
                 onChange={handleLevelChange}
@@ -85,6 +85,7 @@ function Spells() {
                 <option value="9">Level 9</option>
               </select>
             </label>
+            {"  "}
             <label htmlFor="schoolFilter">
               Filter By School:{" "}
               <select
@@ -103,6 +104,7 @@ function Spells() {
                 <option value="Transmutation">Transmutation</option>
               </select>
             </label>
+            {"  "}
             <label htmlFor="classFilter">
               Filter By Class:{" "}
               <select
